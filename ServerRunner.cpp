@@ -44,7 +44,8 @@ void runServerNew(string file, int port){
             perror("error accepting client");
         }
         //k cant be negetive
-        while (buffer[0] != '-') {
+        bool flag = true;
+        while (flag) {
             read_bytes = recv(client_sock, buffer, expected_data_len, 0);
             if (read_bytes == 0) {
                 // connection is closed
@@ -55,28 +56,45 @@ void runServerNew(string file, int port){
             }
             //send with some defineder between like : k&vector&distance
             //getting k
-            int k = int(buffer[0]);
-            //getting vector
-            int i = 2;
-            string vec = ""; //need to get the vector from the buffer
-            while(isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.'){
-                vec += buffer[i];
-                i++;
+            int k;
+            if (buffer[0] == '-') {
+                if (buffer[1] == '1') {
+                    flag = false;
+                } else {
+                    k = int(buffer[1]);
+                    k = k * -1;
+                }
+            } else {
+                k = int(buffer[0]);
             }
-            vector<float> vector;
-            vector = MyVector::returnNewNumb(vec);
-            //getting distance name
-            string distanceName = ""; //need to get the distance name from the buffer
-            distanceName += buffer[i] + buffer[i + 1] + buffer[i + 2];
-            //we already have the file
-            //char result[4096];
-            string result = FormerMainRunner(k, distanceName, vector, file);
-            for(int i = 0; i < result.length(); i++){
-                bufferReturn[i] = result[i];
+            string result;
+            if (k < 0 && flag) {
+                //getting vector
+                int i = 2;
+                string vec = ""; //need to get the vector from the buffer
+                while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.') {
+                    vec += buffer[i];
+                    i++;
+                }
+                vector<float> vector;
+                vector = MyVector::returnNewNumb(vec);
+                //getting distance name
+                string distanceName = ""; //need to get the distance name from the buffer
+                distanceName += buffer[i] + buffer[i + 1] + buffer[i + 2];
+                //we already have the file
+                //char result[4096];
+                result = FormerMainRunner(k, distanceName, vector, file);
+            } else {
+                result = "invalid input";
             }
-            int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
-            if (sent_bytes < 0) {
-                perror("error sending to client");
+            if (flag) {
+                for (int i = 0; i < result.length(); i++) {
+                    bufferReturn[i] = result[i];
+                }
+                int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
+                if (sent_bytes < 0) {
+                    perror("error sending to client");
+                }
             }
         }
         close(client_sock);
