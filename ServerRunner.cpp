@@ -48,10 +48,10 @@ void runServerNew(string file, int port){
         while (flag) {
             read_bytes = recv(client_sock, buffer, expected_data_len, 0);
             if (read_bytes == 0) {
-                // connection is closed
+                perror("error sending to client");
             } else if (read_bytes < 0) {
                 perror("error accepting client");
-            } else {
+            } else { //just to see the information the server get.
                 cout << buffer;
             }
             //send with some defineder between like : k&vector&distance
