@@ -68,7 +68,7 @@ void runServerNew(string file, int port){
                 k = int(buffer[0]);
             }
             string result;
-            if (k < 0 && flag) {
+            if (k > 0 && flag) {
                 //getting vector
                 int i = 2;
                 string vec = ""; //need to get the vector from the buffer
