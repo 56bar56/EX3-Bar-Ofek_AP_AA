@@ -109,23 +109,14 @@ string FoundTheName(string names[]){
     }
     return result;
 }
-int main(int argc, char *argv[]){
+string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, string fileRead){
     string lineUser;
-    std::vector<float> g1;
-    if(argc!=4) {
-        std::cout<<"we dont get enough information";
-        exit(1);
-    }
+    std::vector<float> g1 = vec;
     int i;
-    for(i=0;i<std::strlen(argv[1]);i++) {
-        if(!std::isdigit(argv[1][i])) {
-            std::cout<<"the k isn't valid value";
-            exit(1);
-        }
-    }
-    int k = std::stoi(argv[1]);
-    std::string file=argv[2];
-    std::string disKind=argv[3];
+    int k = kPlaces;
+    std::string file = fileRead;
+    std::string disKind = distanceKind;
+
     if(disKind!="AUC"&&disKind!="MAN"&&disKind!="CHB"&&disKind!="CAN"&&disKind!="MIN") {
         std::cout<<"the distance isn't valid value";
         exit(1);
@@ -141,8 +132,6 @@ int main(int argc, char *argv[]){
             std::getline (myfile, myline);
         }
         while(true) {
-            getline(cin, lineUser); // get a line from the user
-            g1=MyVector::returnNewNumb(lineUser);
             list.setDistances(MyVector(g1),disKind);//AUC
             list.select(k);
             DistanceAndName closest[k];
@@ -153,12 +142,13 @@ int main(int argc, char *argv[]){
             }
             mergeSort(closestNames, 0, k-1);  //sort by string
             string result = FoundTheName(closestNames);
-            cout << result << std::endl;    //print the name
+            //cout << result << std::endl;//print the name
+            return result;
 
         }
     }
     else {
         std::cout << "Couldn't open file\n";
+        return "-1";
     }
-    return 0;
 }
