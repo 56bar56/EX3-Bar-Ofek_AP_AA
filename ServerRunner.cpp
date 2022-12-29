@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     int i;
     for (i = 0; i < strlen(argv[2]); i++) {
         if (!std::isdigit(argv[2][i])) {
-            std::cout << "the k isn't valid value";
+            std::cout << "the port isn't valid value";
             exit(1);
         }
     }
