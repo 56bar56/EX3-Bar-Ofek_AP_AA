@@ -26,24 +26,31 @@ int main() {
     if (connect(sock, (struct sockaddr * ) &sin, sizeof(sin)) < 0 ) {
         perror("error connecting to server");
     }
-    char data_addr[] = "Im a message" ;
-    int data_len = strlen(data_addr);
-    int sent_bytes = send(sock, data_addr, data_len, 0);
-    if (sent_bytes < 0 ) {
-        // error
-    }
+    char data_addr[];
     char buffer[4096];
     int expected_data_len = sizeof(buffer);
-    int read_bytes = recv(sock, buffer, expected_data_len, 0);
-    if (read_bytes == 0 ) {
-        // connection is closed
+    while(true) {
+        getLine(cin, data_addr);
+        int data_len = strlen(data_addr);
+        int sent_bytes = send(sock, data_addr, data_len, 0);
+        if (sent_bytes < 0 ) {
+            // error
+        }
+        if(data_addr=="-1") {
+            break;
+        }
+        int read_bytes = recv(sock, buffer, expected_data_len, 0);
+        if (read_bytes == 0 ) {
+            // connection is closed
+        }
+        else if (read_bytes < 0 ) {
+            // error
+        }
+        else {
+            cout << buffer;
+        }
     }
-    else if (read_bytes < 0 ) {
-        // error
 
-    }
-    else { cout << buffer;
-    }
     close(sock);
     return 0 ;
 }
