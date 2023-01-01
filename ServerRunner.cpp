@@ -65,7 +65,15 @@ void runServerNew(string file, int port){
                     k = k * -1;
                 }
             } else {
-                k = int(buffer[0]);
+                int counter = 0;
+                while(buffer[counter] != ' '){
+                    counter++;
+                }
+                string kstr = "";
+                for(int i = 0; i <= counter; i++){
+                    kstr += buffer[i];
+                }
+                k = std::stoi(kstr);
             }
             string result;
             if (k > 0 && flag) {
