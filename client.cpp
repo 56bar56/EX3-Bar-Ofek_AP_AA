@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     int port = std::stoi(argv[2]);
      * const int port_no=stoi(argv[2])
      * */
-    const char * ip_address = "127.0.0.1" ;
+    const char * ip_address = "172.26.160.1" ;
     const int port_no = 5555 ;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0 ) {

@@ -7,25 +7,20 @@
 #include <cstdlib>
 #include <cstring>
 #include "DistanceAndName.cpp"
+#include "DistanceList.h"
 using namespace std;
-/**
- * this class as a vector of a DistanceAndName object.
- */
-class DistanceList {
-private:
-    std::vector<DistanceAndName> v; //a vector we keep in the class
-public:
+
     /**
      * an empty constructor because we already analyzed the field and we need to put objects.
      */
-    DistanceList() {
+    DistanceList::DistanceList() {
     }
 /**
  * this func get a string from our file and add the vector that should be to our list
  * according to the instructions we received.
  * @param str1 the string from our file
  */
-    void addItem(string str1) {
+    void DistanceList::addItem(string str1) {
         string num_vec = "";
         string name = "";
         float num;
@@ -63,7 +58,7 @@ public:
      * @param k the numbers of elements we put
      * @param closest the array we put values in
      */
-    void closestK(int k,  DistanceAndName closest[]) {
+    void DistanceList::closestK(int k,  DistanceAndName closest[]) {
         int i;
         for (i = 0; i<k; i++) {
             closest[i]=this->v[i];
@@ -73,7 +68,7 @@ public:
      * a getter to our v
      * @return our v field
      */
-    const vector<DistanceAndName> &getV() const {
+    const vector<DistanceAndName> DistanceList::getV() const;
         return v;
     }
     /**
@@ -82,7 +77,7 @@ public:
      * @param vector the vector we check the distance from
      * @param disName the kind of distance
      */
-    void setDistances(MyVector vector, string disName) {
+    void DistanceList::setDistances(MyVector vector, string disName) {
         int i;
         for (i = 0; i < this->v.size(); i++) {
             this->v[i].setDistance(vector, disName);
@@ -93,7 +88,7 @@ public:
  * before we will have smaller numbers and right bigger.
  * @param k the value we arranged accordingly
  */
-    void select(int k) {
+    void DistanceList::select(int k) {
         if (k >= this->v.size()) {
             cout << "k can't be bigger than the size of the vector";
             exit(1);
@@ -120,7 +115,7 @@ public:
      * @param end the end of the array we use
      * @return the pivot spot
      */
-    int partition(int start, int end) {
+    int DistanceList::partition(int start, int end) {
         int i;
         float x = (this->v[end]).getDistance();
         int j = start;
@@ -137,5 +132,3 @@ public:
         this->v[j] = d2;
         return j;
     }
-
-};

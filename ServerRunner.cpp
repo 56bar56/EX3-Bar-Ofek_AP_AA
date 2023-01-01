@@ -1,6 +1,7 @@
 //
 // Created by newba on 29/12/2022.
 //
+/*
 
 #include "ServerRunner.h"
 #include <iostream>
@@ -120,4 +121,4 @@ int main(int argc, char *argv[]) {
     }
     int port = std::stoi(argv[2]);
     runServerNew(file, port);
-}
+}*/
