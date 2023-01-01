@@ -11,7 +11,18 @@
 #include <unistd.h>
 #include <string.h>
 using namespace std ;
-int main() {
+int main(int argc, char *argv[]) {
+    /* const char * ip_address=argv[1];
+     * int i;
+     * for (i = 0; i < strlen(argv[2]); i++) {
+        if (!std::isdigit(argv[2][i])) {
+            std::cout << "the port isn't valid value";
+            exit(1);
+        }
+    }
+    int port = std::stoi(argv[2]);
+     * const int port_no=stoi(argv[2])
+     * */
     const char * ip_address = "127.0.0.1" ;
     const int port_no = 5555 ;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -28,9 +39,34 @@ int main() {
     }
     char data_addr[];
     char buffer[4096];
+    char sacnner[];
+    char vector[];
+    char disKind[];
+    char k[];
     int expected_data_len = sizeof(buffer);
+    int i=0;
     while(true) {
-        getLine(cin, data_addr);
+        i=0;
+        vector="";
+        disKind="";
+        data_addr="";
+        k="";
+        getLine(cin, scanner);
+        while(!isalpha(scanner[i])) {
+            vector+=scanner[i];
+            i++;
+        }
+        while(isalpha(scanner[i])) {
+            disKind+=scanner[i];
+            i++;
+        }
+        while(i<scanner.length()) {
+            k+=scanner[i];
+            i++;
+        }
+        data_addr+=k;
+        data_addr+=disKind;
+        data_addr+=vector;
         int data_len = strlen(data_addr);
         int sent_bytes = send(sock, data_addr, data_len, 0);
         if (sent_bytes < 0 ) {
