@@ -1,15 +1,14 @@
 //
 // Created by User on 07/12/2022.
 //
-
-#ifndef EX2_AP_B_O_DISTANCELIST_H
-#define EX2_AP_B_O_DISTANCELIST_H
 #include <vector>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
 #include "DistanceAndName.h"
-#include "DistanceList.h"
+
+#ifndef EX2_AP_B_O_DISTANCELIST_H
+#define EX2_AP_B_O_DISTANCELIST_H
 
 using namespace std;
 /**
@@ -22,11 +21,10 @@ public:
     DistanceList();
     void addItem(string str1);
     void closestK(int k,  DistanceAndName closest[]);
-    const vector<DistanceAndName> &getV() const;
+    const vector<DistanceAndName> getV();
     void setDistances(MyVector vector, string disName);
     void select(int k);
     int partition(int start, int end);
-
 
     };
 

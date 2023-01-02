@@ -2,12 +2,25 @@
 // Created by newba on 06/12/2022.
 //
 
+#include <algorithm>
 #include "FileClass.h"
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include <cstdlib>
-#include "DistanceList.cpp"
+#include "DistanceList.h"
+/**
+ * get a string array and sort him by the strings.
+ * @param array the array we sort
+ * @param begin the start of the array
+ * @param end the end of he array
+ */
+void mergeSort(string array[], int const begin, int const end)
+{
+    if (begin >= end)
+        return;
+
+    int mid = begin + (end - begin) / 2;
+    mergeSort(array, begin, mid);
+    mergeSort(array, mid + 1, end);
+    FileClass::merge(array, begin, mid, end);
+}
 /**
  * divide the array into the little arrays and start sorting them and connect them.
  * @param array
@@ -15,7 +28,8 @@
  * @param mid
  * @param right
  */
-void merge(string array[], int const left, int const mid,int const right) {
+
+void FileClass::merge(string array[], int const left, int const mid,int const right) {
     int const subArrayOne = mid - left + 1;
     int const subArrayTwo = right - mid;
 
@@ -55,22 +69,6 @@ void merge(string array[], int const left, int const mid,int const right) {
     }
     delete[] leftArray;
     delete[] rightArray;
-}
-/**
- * get a string array and sort him by the strings.
- * @param array the array we sort
- * @param begin the start of the array
- * @param end the end of he array
- */
-void mergeSort(string array[], int const begin, int const end)
-{
-    if (begin >= end)
-        return;
-
-    int mid = begin + (end - begin) / 2;
-    mergeSort(array, begin, mid);
-    mergeSort(array, mid + 1, end);
-    merge(array, begin, mid, end);
 }
 /**
  * found the member of the array that show the most.

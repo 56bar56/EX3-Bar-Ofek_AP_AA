@@ -1,7 +1,7 @@
 //
 // Created by newba on 29/12/2022.
 //
-/*
+
 
 #include "ServerRunner.h"
 #include <iostream>
@@ -110,7 +110,11 @@ void runServerNew(string file, int port){
     }
     close(sock);
 }
-int main(int argc, char *argv[]) {
+int main() {
+    string file = "iris_classified.csv";
+    int port = 5555;
+    runServerNew(file, port);
+    /*
     string file = argv[1];
     int i;
     for (i = 0; i < strlen(argv[2]); i++) {
@@ -121,4 +125,5 @@ int main(int argc, char *argv[]) {
     }
     int port = std::stoi(argv[2]);
     runServerNew(file, port);
-}*/
+     */
+}
