@@ -3,7 +3,6 @@
 //
 
 #include "Vector_Algorithms.h"
-using namespace std;
 
 /**
  * a constructor for the class.

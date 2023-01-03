@@ -4,15 +4,6 @@
 
 
 #include "ServerRunner.h"
-#include <iostream>
-#include <sys/socket.h>
-#include <stdio.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <string.h>
-#include <vector>
-#include "FileClass.cpp"
-#include "DistanceList.cpp"
 using namespace std;
 
 void runServerNew(string file, int port){
@@ -110,7 +101,7 @@ void runServerNew(string file, int port){
     }
     close(sock);
 }
-int main() {
+int main(int argc, char *argv[]) {
     string file = "iris_classified.csv";
     int port = 5555;
     runServerNew(file, port);

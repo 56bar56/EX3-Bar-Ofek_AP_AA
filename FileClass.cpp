@@ -2,9 +2,7 @@
 // Created by newba on 06/12/2022.
 //
 
-#include <algorithm>
 #include "FileClass.h"
-#include "DistanceList.h"
 /**
  * get a string array and sort him by the strings.
  * @param array the array we sort
@@ -19,7 +17,7 @@ void mergeSort(string array[], int const begin, int const end)
     int mid = begin + (end - begin) / 2;
     mergeSort(array, begin, mid);
     mergeSort(array, mid + 1, end);
-    FileClass::merge(array, begin, mid, end);
+    merge(array, begin, mid, end);
 }
 /**
  * divide the array into the little arrays and start sorting them and connect them.
@@ -29,7 +27,7 @@ void mergeSort(string array[], int const begin, int const end)
  * @param right
  */
 
-void FileClass::merge(string array[], int const left, int const mid,int const right) {
+void merge(string array[], int const left, int const mid,int const right) {
     int const subArrayOne = mid - left + 1;
     int const subArrayTwo = right - mid;
 
