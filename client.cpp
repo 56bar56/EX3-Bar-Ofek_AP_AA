@@ -67,9 +67,13 @@ int main(int argc, char *argv[]) {
         }
         else {
             cout << buffer;
+            if(buffer[0]=='-') {
+                if(buffer[1]=='1') {
+                    break;
+                }
+            }
         }
     }
-
     close(sock);
     return 0 ;
 }

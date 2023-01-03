@@ -94,18 +94,20 @@ void runServerNew(string file, int port){
                 k = std::stoi(kstr);
                 result = FormerMainRunner(k, distanceName, vector, file);
             } else {
-                result = "invalid input";
+                result = "-1";
             }
-            if (flag) {
-                for (int i = 0; i < result.length(); i++) {
-                    bufferReturn[i] = result[i];
-                }
-                int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
-                if (sent_bytes < 0) {
-                    perror("error sending to client");
-                }
+            for (int i = 0; i < result.length(); i++) {
+                bufferReturn[i] = result[i];
+            }
+            int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
+            if (sent_bytes < 0) {
+                perror("error sending to client");
+            }
+            if(!flag) {
+                break;
             }
         }
+        printf("we close the clieant");
         close(client_sock);
     }
     close(sock);
