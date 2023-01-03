@@ -3,7 +3,7 @@ output: ServerRunner.o FileClass.o DistanceAndName.o DistanceList.o Vector_Algor
 	g++ ServerRunner.o FileClass.o DistanceAndName.o DistanceList.o Vector_Algorithms.o -o server.out
 
 ServerRunner.o: ServerRunner.cpp
-	g++ -std=c++11 -g -c FileClass.cpp
+	g++ -std=c++11 -g -c ServerRunner.cpp
 
 FileClass.o: FileClass.cpp
 	g++ -std=c++11 -g -c FileClass.cpp
