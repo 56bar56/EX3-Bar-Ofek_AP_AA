@@ -70,21 +70,24 @@ void runServerNew(string file, int port){
                 //getting vector
                 int i = 0;
                 string vec = ""; //need to get the vector from the buffer
-                while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.') {
+                while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.'||buffer[i]=='E') {
                     vec += buffer[i];
                     i++;
                 }
                 vector<float> vector;
                 vector = MyVector::returnNewNumb(vec);
                 //getting distance name
-                string distanceName = ""; //need to get the distance name from the buffer
-                distanceName += buffer[i] + buffer[i + 1] + buffer[i + 2];
+                string distanceName=""; //need to get the distance name from the buffer
+                while(isalpha(buffer[i])) {
+                    distanceName+=buffer[i];
+                    i++;
+                }
+                i++;
                 //we already have the file
                 //char result[4096];
-                i += 4;
                 int k;
                 string kstr = "";
-                while(buffer[i] != ' '){
+                while(buffer[i] != ' '&&buffer[i]!='\0'){
                     kstr += buffer[i];
                     i++;
                 }

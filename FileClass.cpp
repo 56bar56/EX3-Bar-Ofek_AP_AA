@@ -115,7 +115,7 @@ string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, str
 
     if(disKind!="AUC"&&disKind!="MAN"&&disKind!="CHB"&&disKind!="CAN"&&disKind!="MIN") {
         std::cout<<"the distance isn't valid value";
-        exit(1);
+        return "invalid input";
     }
     DistanceList list= DistanceList();
     std::ifstream myfile;
@@ -127,24 +127,21 @@ string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, str
             list.addItem(myline);
             std::getline (myfile, myline);
         }
-        while(true) {
-            list.setDistances(MyVector(g1),disKind);//AUC
-            list.select(k);
-            DistanceAndName closest[k];
-            list.closestK(10,closest);
-            string closestNames[k];
-            for(i = 0; i < k; i++){
-                closestNames[i] = closest[i].getName();
-            }
-            mergeSort(closestNames, 0, k-1);  //sort by string
-            string result = FoundTheName(closestNames);
-            //cout << result << std::endl;//print the name
-            return result;
-
+        list.setDistances(MyVector(g1),disKind);//AUC
+        list.select(k);
+        DistanceAndName closest[k];
+        list.closestK(k,closest);
+        string closestNames[k];
+        for(i = 0; i < k; i++){
+            closestNames[i] = closest[i].getName();
         }
+        mergeSort(closestNames, 0, k-1);  //sort by string
+        string result = FoundTheName(closestNames);
+        //cout << result << std::endl;//print the name
+        return result;
     }
     else {
         std::cout << "Couldn't open file\n";
-        return "-1";
+        return "Couldn't open file\n";
     }
 }
