@@ -105,28 +105,15 @@ string FoundTheName(string names[]){
     }
     return result;
 }
-string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, string fileRead){
-    string lineUser;
+string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, DistanceList list){
     std::vector<float> g1 = vec;
     int i;
     int k = kPlaces;
-    std::string file = fileRead;
     std::string disKind = distanceKind;
-
     if(disKind!="AUC"&&disKind!="MAN"&&disKind!="CHB"&&disKind!="CAN"&&disKind!="MIN") {
         std::cout<<"the distance isn't valid value";
         return "invalid input";
     }
-    DistanceList list= DistanceList();
-    std::ifstream myfile;
-    myfile.open(file);
-    std::string myline;
-    if ( myfile ) {
-        std::getline (myfile, myline);
-        while ( myfile ) { // equivalent to myfile.good()
-            list.addItem(myline);
-            std::getline (myfile, myline);
-        }
         list.setDistances(MyVector(g1),disKind);//AUC
         list.select(k);
         DistanceAndName closest[k];
@@ -139,9 +126,4 @@ string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, str
         string result = FoundTheName(closestNames);
         //cout << result << std::endl;//print the name
         return result;
-    }
-    else {
-        std::cout << "Couldn't open file\n";
-        return "Couldn't open file\n";
-    }
 }

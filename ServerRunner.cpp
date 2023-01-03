@@ -4,23 +4,40 @@
 
 
 #include "ServerRunner.h"
+
 using namespace std;
 
-void runServerNew(string file, int port){
-    const int server_port = port ;
+void runServerNew(string fileRead, int port) {
+    string lineUser;
+    std::string file = fileRead;
+    DistanceList list = DistanceList();
+    std::ifstream myfile;
+    myfile.open(file);
+    std::string myline;
+    if (myfile) {
+        std::getline(myfile, myline);
+        while (myfile) { // equivalent to myfile.good()
+            list.addItem(myline);
+            std::getline(myfile, myline);
+        }
+    }  else {
+        std::cout << "Couldn't open file\n";
+        exit(1);
+    }
+    const int server_port = port;
     int sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock < 0 ) {
+    if (sock < 0) {
         perror("error creating socket");
     }
     struct sockaddr_in sin;
-    memset( &sin, 0 , sizeof(sin));
+    memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = INADDR_ANY;
     sin.sin_port = htons(server_port);
-    if (bind(sock, (struct sockaddr * ) &sin, sizeof(sin)) < 0 ) {
+    if (bind(sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
         perror("error binding socket");
     }
-    while(true) {
+    while (true) {
         if (listen(sock, 5) < 0) {
             perror("error listening to a socket");
         }
@@ -37,14 +54,24 @@ void runServerNew(string file, int port){
         }
         //k cant be negetive
         bool flag = true;
+        int check=0;
         while (flag) {
+            check++;
+            if(check==2) {
+                check++;
+            }
+            int j=0;
+            while(buffer[j] != '\0') {
+                buffer[j]='\0';
+                j++;
+            }
             read_bytes = recv(client_sock, buffer, expected_data_len, 0);
             if (read_bytes == 0) {
                 perror("error sending to client");
             } else if (read_bytes < 0) {
                 perror("error accepting client");
             } else { //just to see the information the server get.
-                cout << buffer;
+                cout << buffer<< std::endl;;
             }
             //send with some defineder between like : k&vector&distance
             //getting first number
@@ -52,15 +79,14 @@ void runServerNew(string file, int port){
                 if (buffer[1] == '1') {
                     bool ifSpace = true;
                     int i;
-                    for(i = 2; i < strlen(buffer) && ifSpace; i++){
-                        if(buffer[i] != ' ') {
+                    for (i = 2; i < strlen(buffer) && ifSpace; i++) {
+                        if (buffer[i] != ' ') {
                             ifSpace = false;
                         }
                     }
-                    if(ifSpace){
+                    if (ifSpace) {
                         flag = false;
-                    }
-                    else{
+                    } else {
                         flag = true;
                     }
                 }
@@ -70,16 +96,17 @@ void runServerNew(string file, int port){
                 //getting vector
                 int i = 0;
                 string vec = ""; //need to get the vector from the buffer
-                while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.'||buffer[i]=='E') {
+                while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.' ||
+                       buffer[i] == 'E') {
                     vec += buffer[i];
                     i++;
                 }
                 vector<float> vector;
                 vector = MyVector::returnNewNumb(vec);
                 //getting distance name
-                string distanceName=""; //need to get the distance name from the buffer
-                while(isalpha(buffer[i])) {
-                    distanceName+=buffer[i];
+                string distanceName = ""; //need to get the distance name from the buffer
+                while (isalpha(buffer[i])) {
+                    distanceName += buffer[i];
                     i++;
                 }
                 i++;
@@ -87,16 +114,16 @@ void runServerNew(string file, int port){
                 //char result[4096];
                 int k;
                 string kstr = "";
-                while(buffer[i] != ' '&&buffer[i]!='\0'){
+                while (buffer[i] != ' ' && buffer[i] != '\0') {
                     kstr += buffer[i];
                     i++;
                 }
                 k = std::stoi(kstr);
-                result = FormerMainRunner(k, distanceName, vector, file);
+                result = FormerMainRunner(k, distanceName, vector, list);
             } else {
                 result = "-1";
             }
-            if(flag) {
+            if (flag) {
                 for (int i = 0; i < result.length(); i++) {
                     bufferReturn[i] = result[i];
                 }
@@ -108,11 +135,12 @@ void runServerNew(string file, int port){
                 break;
             }
         }
-       cout<<("we close the clieant");
+        cout << ("we close the clieant");
         close(client_sock);
     }
     close(sock);
 }
+
 int main(int argc, char *argv[]) {
     string file = "iris_classified.csv";
     int port = 5555;

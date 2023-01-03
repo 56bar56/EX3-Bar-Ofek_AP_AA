@@ -22,6 +22,6 @@ using namespace std;
 
     string FoundTheName(string names[]);
 
-    string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, string fileRead);
+    string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, DistanceList list);
 
 #endif //EX2_AP_B_O_FILECLASS_H
