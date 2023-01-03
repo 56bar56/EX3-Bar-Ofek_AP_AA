@@ -47,30 +47,28 @@ void runServerNew(string file, int port){
                 cout << buffer;
             }
             //send with some defineder between like : k&vector&distance
-            //getting k
-            int k;
+            //getting first number
             if (buffer[0] == '-') {
                 if (buffer[1] == '1') {
-                    flag = false;
-                } else {
-                    k = int(buffer[1]);
-                    k = k * -1;
+                    bool ifSpace = true;
+                    int i;
+                    for(i = 2; i < strlen(buffer) && ifSpace; i++){
+                        if(buffer[i] != ' ') {
+                            ifSpace = false;
+                        }
+                    }
+                    if(ifSpace){
+                        flag = false;
+                    }
+                    else{
+                        flag = true;
+                    }
                 }
-            } else {
-                int counter = 0;
-                while(buffer[counter] != ' '){
-                    counter++;
-                }
-                string kstr = "";
-                for(int i = 0; i <= counter; i++){
-                    kstr += buffer[i];
-                }
-                k = std::stoi(kstr);
             }
             string result;
-            if (k > 0 && flag) {
+            if (flag) {
                 //getting vector
-                int i = 2;
+                int i = 0;
                 string vec = ""; //need to get the vector from the buffer
                 while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.') {
                     vec += buffer[i];
@@ -83,6 +81,14 @@ void runServerNew(string file, int port){
                 distanceName += buffer[i] + buffer[i + 1] + buffer[i + 2];
                 //we already have the file
                 //char result[4096];
+                i += 4;
+                int k;
+                string kstr = "";
+                while(buffer[i] != ' '){
+                    kstr += buffer[i];
+                    i++;
+                }
+                k = std::stoi(kstr);
                 result = FormerMainRunner(k, distanceName, vector, file);
             } else {
                 result = "invalid input";
