@@ -55,8 +55,10 @@ int main(int argc, char *argv[]) {
         if (sent_bytes < 0 ) {
             // error
         }
-        if(data_addr=="-1") {
-            break;
+        if(data_addr[0]=='-') {
+            if(data_addr[1]=='1') {
+                break;
+            }
         }
         int read_bytes = recv(sock, buffer, expected_data_len, 0);
         if (read_bytes == 0 ) {
@@ -67,11 +69,6 @@ int main(int argc, char *argv[]) {
         }
         else {
             cout << buffer;
-            if(buffer[0]=='-') {
-                if(buffer[1]=='1') {
-                    break;
-                }
-            }
         }
     }
     close(sock);

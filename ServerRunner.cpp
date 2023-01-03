@@ -96,18 +96,19 @@ void runServerNew(string file, int port){
             } else {
                 result = "-1";
             }
-            for (int i = 0; i < result.length(); i++) {
-                bufferReturn[i] = result[i];
-            }
-            int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
-            if (sent_bytes < 0) {
-                perror("error sending to client");
-            }
-            if(!flag) {
+            if(flag) {
+                for (int i = 0; i < result.length(); i++) {
+                    bufferReturn[i] = result[i];
+                }
+                int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
+                if (sent_bytes < 0) {
+                    perror("error sending to client");
+                }
+            } else {
                 break;
             }
         }
-        printf("we close the clieant");
+       cout<<("we close the clieant");
         close(client_sock);
     }
     close(sock);
