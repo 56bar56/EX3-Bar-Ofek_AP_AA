@@ -14,19 +14,18 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    /* const char * ip_address=argv[1];
-     * int i;
-     * for (i = 0; i < strlen(argv[2]); i++) {
+     const char * ip_address=argv[1];
+     int i;
+      for (i = 0; i < strlen(argv[2]); i++) {
         if (!std::isdigit(argv[2][i])) {
             std::cout << "the port isn't valid value";
             exit(1);
         }
     }
-    int port = std::stoi(argv[2]);
-     * const int port_no=stoi(argv[2])
-     */
+      const int port_no=std::stoi(argv[2]);
+     /*
     const char *ip_address = "127.0.0.1";
-    const int port_no = 5555;
+    const int port_no = 5555;*/
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
@@ -45,7 +44,7 @@ int main(int argc, char *argv[]) {
     char buffer[4096];
     string scanner;
     int expected_data_len = sizeof(buffer);
-    int i = 0;
+     i = 0;
     while (true) {
         bool isExite = false;
         i = 0;
@@ -59,8 +58,12 @@ int main(int argc, char *argv[]) {
             i++;
         }
         getline(cin, scanner);
-        for (i = 0; i < scanner.size(); i++) {
-            data_addr[i] = scanner[i];
+        if(scanner.empty()) {
+            data_addr[0]= ' ';
+        }else {
+            for (i = 0; i < scanner.size(); i++) {
+                data_addr[i] = scanner[i];
+            }
         }
         int data_len = strlen(data_addr);
         int sent_bytes = send(sock, data_addr, data_len, 0);

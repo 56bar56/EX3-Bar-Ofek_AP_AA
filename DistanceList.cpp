@@ -70,6 +70,7 @@ const vector<DistanceAndName> DistanceList::getV(){
  * distance we check.
  * @param vector the vector we check the distance from
  * @param disName the kind of distance
+ * @return 0 if we faled and 1 if we succeed
  */
 int DistanceList::setDistances(MyVector vector, string disName) {
     int i;

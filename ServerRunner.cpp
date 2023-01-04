@@ -6,7 +6,11 @@
 #include "ServerRunner.h"
 
 using namespace std;
-
+/**
+ * a function that run our server.
+ * @param fileRead the nam of the file we get
+ * @param port the port we bind to
+ */
 void runServerNew(string fileRead, int port) {
     string lineUser;
     std::string file = fileRead;
@@ -178,11 +182,15 @@ void runServerNew(string fileRead, int port) {
     }
     close(sock);
 }
-
+/**
+ * the main of the server.
+ * @param argc the number of arguments
+ * @param argv the arguments we get in the command line
+ * @return default 1
+ */
 int main(int argc, char *argv[]) {
     string file = "iris_classified.csv";
     int port = 5555;
-    runServerNew(file, port);
     /*
     string file = argv[1];
     int i;
@@ -193,6 +201,7 @@ int main(int argc, char *argv[]) {
         }
     }
     int port = std::stoi(argv[2]);
+    */
     runServerNew(file, port);
-     */
+    return 1;
 }

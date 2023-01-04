@@ -44,12 +44,12 @@ MyVector DistanceAndName::getVector() const {
 float DistanceAndName::getDistance() const {
     return distance;
 }
-
 /**
  * a function that set the distance to be from a vector we get
  * and the kind of distance we get to.
  * @param myVector the vector we get
  * @param disName the kind of distance we get
+ * @return 0 if we fail and 1 if we succeed
  */
 int DistanceAndName::setDistance(MyVector myVector, string disName) {
     if (myVector.getV().size() != this->vector.getV().size()) {
