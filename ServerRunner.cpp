@@ -147,11 +147,14 @@ void runServerNew(string fileRead, int port) {
                     }
                     result = FormerMainRunner(k, distanceName, vector, list);
                 }
-            } else {
-                result = "-1";
             }
             if (flagStop) {
-                for (int i = 0; i < result.length(); i++) {
+                int i=0;
+                while(bufferReturn[i]) {
+                    bufferReturn[i]='\0';
+                    i++;
+                }
+                for ( i = 0; i < result.length(); i++) {
                     bufferReturn[i] = result[i];
                 }
                 int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);

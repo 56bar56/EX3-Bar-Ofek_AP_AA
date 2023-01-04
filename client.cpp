@@ -45,30 +45,36 @@ int main(int argc, char *argv[]) {
     char buffer[4096];
     string scanner;
     int expected_data_len = sizeof(buffer);
-    int i;
+    int i=0;
     while (true) {
+        i=0;
+        while(data_addr[i]) {
+            data_addr[i]='\0';
+            i++;
+        }
+        i=0;
+        while(buffer[i]) {
+            buffer[i]='\0';
+            i++;
+        }
         getline(cin, scanner);
         std::cout << scanner<<" the line we get" << std::endl;
         for (i = 0; i < scanner.size(); i++) {
             data_addr[i] = scanner[i];
-        }
-        while(data_addr[i]) {
-            data_addr[i]='\0';
-            i++;
         }
         int data_len = strlen(data_addr);
         int sent_bytes = send(sock, data_addr, data_len, 0);
         if (sent_bytes < 0) {
             // error
         }
-        if (data_addr[0] == '-') {
-            if (data_addr[1] == '1') {
+        i=0;
+        while (data_addr[i] == ' ') {
+            i++;
+        }
+        if (data_addr[i++] == '-') {
+            if (data_addr[i] == '1') {
                 break;
             }
-        }
-        while(buffer[i]) {
-            buffer[i]='\0';
-            i++;
         }
         int read_bytes = recv(sock, buffer, expected_data_len, 0);
         if (read_bytes == 0) {
