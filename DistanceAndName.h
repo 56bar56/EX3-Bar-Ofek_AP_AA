@@ -22,7 +22,7 @@ public:
     DistanceAndName();
     MyVector getVector() const;
     float getDistance() const;
-    void setDistance(MyVector myVector, string disName);
+    int setDistance(MyVector myVector, string disName);
     const string getName() const;
 };
 

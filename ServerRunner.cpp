@@ -20,7 +20,7 @@ void runServerNew(string fileRead, int port) {
             list.addItem(myline);
             std::getline(myfile, myline);
         }
-    }  else {
+    } else {
         std::cout << "Couldn't open file\n";
         exit(1);
     }
@@ -53,30 +53,30 @@ void runServerNew(string fileRead, int port) {
             perror("error accepting client");
         }
         //k cant be negetive
-        bool flag = true;
-        int check=0;
-        while (flag) {
-            check++;
-            if(check==2) {
-                check++;
-            }
-            int j=0;
-            while(buffer[j] != '\0') {
-                buffer[j]='\0';
+        bool flagStop = true;
+        while (flagStop) {
+            bool isValid = true;
+            int j = 0;
+            while (buffer[j] != '\0') {
+                buffer[j] = '\0';
                 j++;
             }
+            j = 0;
             read_bytes = recv(client_sock, buffer, expected_data_len, 0);
             if (read_bytes == 0) {
                 perror("error sending to client");
             } else if (read_bytes < 0) {
                 perror("error accepting client");
             } else { //just to see the information the server get.
-                cout << buffer<< std::endl;;
+                cout << buffer << std::endl;;
             }
             //send with some defineder between like : k&vector&distance
             //getting first number
-            if (buffer[0] == '-') {
-                if (buffer[1] == '1') {
+            while (buffer[j] == ' ') {
+                j++;
+            }
+            if (buffer[j++] == '-') {
+                if (buffer[j] == '1') {
                     bool ifSpace = true;
                     int i;
                     for (i = 2; i < strlen(buffer) && ifSpace; i++) {
@@ -85,14 +85,14 @@ void runServerNew(string fileRead, int port) {
                         }
                     }
                     if (ifSpace) {
-                        flag = false;
+                        flagStop = false;
                     } else {
-                        flag = true;
+                        flagStop = true;
                     }
                 }
             }
             string result;
-            if (flag) {
+            if (flagStop) {
                 //getting vector
                 int i = 0;
                 string vec = ""; //need to get the vector from the buffer
@@ -103,13 +103,22 @@ void runServerNew(string fileRead, int port) {
                 }
                 vector<float> vector;
                 vector = MyVector::returnNewNumb(vec);
+                if(vector[0]=='\0') {
+                    isValid= false;
+                    result = "invalid input";
+                }
                 //getting distance name
                 string distanceName = ""; //need to get the distance name from the buffer
+                while (buffer[i] == ' ') {
+                    i++;
+                }
                 while (isalpha(buffer[i])) {
                     distanceName += buffer[i];
                     i++;
                 }
-                i++;
+                while (buffer[i] == ' ') {
+                    i++;
+                }
                 //we already have the file
                 //char result[4096];
                 int k;
@@ -118,12 +127,30 @@ void runServerNew(string fileRead, int port) {
                     kstr += buffer[i];
                     i++;
                 }
-                k = std::stoi(kstr);
-                result = FormerMainRunner(k, distanceName, vector, list);
+                if(kstr=="") {
+                    std::cout << "the k isn't valid value";
+                    result = "invalid input";
+                    isValid=false;
+                }
+                for (i = 0; i < kstr.size(); i++) {
+                    if (!std::isdigit(kstr[i])) {
+                        std::cout << "the k isn't valid value";
+                        result = "invalid input";
+                        isValid=false;
+                    }
+                }
+                if (isValid) {
+                    k = std::stoi(kstr);
+                    if (k > list.getV().size() ||
+                        k < 0) { //if the k is a number we cant use we set him to the size of the list
+                        k = list.getV().size();
+                    }
+                    result = FormerMainRunner(k, distanceName, vector, list);
+                }
             } else {
                 result = "-1";
             }
-            if (flag) {
+            if (flagStop) {
                 for (int i = 0; i < result.length(); i++) {
                     bufferReturn[i] = result[i];
                 }

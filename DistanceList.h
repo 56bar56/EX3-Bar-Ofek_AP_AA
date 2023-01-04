@@ -22,7 +22,7 @@ public:
     void addItem(string str1);
     void closestK(int k,  DistanceAndName closest[]);
     const vector<DistanceAndName> getV();
-    void setDistances(MyVector vector, string disName);
+    int setDistances(MyVector vector, string disName);
     void select(int k);
     int partition(int start, int end);
 

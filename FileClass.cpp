@@ -3,14 +3,14 @@
 //
 
 #include "FileClass.h"
+
 /**
  * get a string array and sort him by the strings.
  * @param array the array we sort
  * @param begin the start of the array
  * @param end the end of he array
  */
-void mergeSort(string array[], int const begin, int const end)
-{
+void mergeSort(string array[], int const begin, int const end) {
     if (begin >= end)
         return;
 
@@ -19,6 +19,7 @@ void mergeSort(string array[], int const begin, int const end)
     mergeSort(array, mid + 1, end);
     merge(array, begin, mid, end);
 }
+
 /**
  * divide the array into the little arrays and start sorting them and connect them.
  * @param array
@@ -27,7 +28,7 @@ void mergeSort(string array[], int const begin, int const end)
  * @param right
  */
 
-void merge(string array[], int const left, int const mid,int const right) {
+void merge(string array[], int const left, int const mid, int const right) {
     int const subArrayOne = mid - left + 1;
     int const subArrayTwo = right - mid;
 
@@ -46,8 +47,7 @@ void merge(string array[], int const left, int const mid,int const right) {
         if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
             array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
             indexOfSubArrayOne++;
-        }
-        else {
+        } else {
             array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
             indexOfSubArrayTwo++;
         }
@@ -68,36 +68,35 @@ void merge(string array[], int const left, int const mid,int const right) {
     delete[] leftArray;
     delete[] rightArray;
 }
+
 /**
  * found the member of the array that show the most.
  * @param names
  * @return
  */
-string FoundTheName(string names[]){
+string FoundTheName(string names[]) {
     string result;
-    if(names->empty()){
+    if (names->empty()) {
         result = "";
-    }
-    else{
+    } else {
         int counter = 1;
         int maxCounter = 0;
-        for(int i = 0; i < names->size() - 1; i++){
-            if(maxCounter < counter){
+        for (int i = 0; i < names->size() - 1; i++) {
+            if (maxCounter < counter) {
                 maxCounter = counter;
             }
-            if(names[i] == names[i+1]){
+            if (names[i] == names[i + 1]) {
                 counter++;
-            }
-            else{
+            } else {
                 counter = 0;
             }
         }
         counter = 1;
-        for(int i = 0; i < names->size() - 1; i++){
-            if(names[i] == names[i+1]){
+        for (int i = 0; i < names->size() - 1; i++) {
+            if (names[i] == names[i + 1]) {
                 counter++;
             }
-            if(counter == maxCounter){
+            if (counter == maxCounter) {
                 result = names[i];
                 break;
             }
@@ -105,25 +104,28 @@ string FoundTheName(string names[]){
     }
     return result;
 }
-string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, DistanceList list){
+
+string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, DistanceList list) {
     std::vector<float> g1 = vec;
     int i;
     int k = kPlaces;
     std::string disKind = distanceKind;
-    if(disKind!="AUC"&&disKind!="MAN"&&disKind!="CHB"&&disKind!="CAN"&&disKind!="MIN") {
-        std::cout<<"the distance isn't valid value";
+    if (disKind != "AUC" && disKind != "MAN" && disKind != "CHB" && disKind != "CAN" && disKind != "MIN") {
+        std::cout << "the distance isn't valid value";
         return "invalid input";
     }
-        list.setDistances(MyVector(g1),disKind);//AUC
-        list.select(k);
-        DistanceAndName closest[k];
-        list.closestK(k,closest);
-        string closestNames[k];
-        for(i = 0; i < k; i++){
-            closestNames[i] = closest[i].getName();
-        }
-        mergeSort(closestNames, 0, k-1);  //sort by string
-        string result = FoundTheName(closestNames);
-        //cout << result << std::endl;//print the name
-        return result;
+    if (list.setDistances(MyVector(g1), disKind) == 0) {
+        return "invalid input";
+    }
+    list.select(k);
+    DistanceAndName closest[k];
+    list.closestK(k, closest);
+    string closestNames[k];
+    for (i = 0; i < k; i++) {
+        closestNames[i] = closest[i].getName();
+    }
+    mergeSort(closestNames, 0, k - 1);  //sort by string
+    string result = FoundTheName(closestNames);
+    //cout << result << std::endl;//print the name
+    return result;
 }

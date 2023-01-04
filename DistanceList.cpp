@@ -71,11 +71,14 @@ const vector<DistanceAndName> DistanceList::getV(){
  * @param vector the vector we check the distance from
  * @param disName the kind of distance
  */
-void DistanceList::setDistances(MyVector vector, string disName) {
+int DistanceList::setDistances(MyVector vector, string disName) {
     int i;
     for (i = 0; i < this->v.size(); i++) {
-        this->v[i].setDistance(vector, disName);
+        if(this->v[i].setDistance(vector, disName)==0) {
+            return 0;
+        }
     }
+    return 1;
 }
 /**
 * get an k value and put the k's size number in the k-1 spot and

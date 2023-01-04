@@ -51,10 +51,10 @@ float DistanceAndName::getDistance() const {
  * @param myVector the vector we get
  * @param disName the kind of distance we get
  */
-void DistanceAndName::setDistance(MyVector myVector, string disName) {
+int DistanceAndName::setDistance(MyVector myVector, string disName) {
     if (myVector.getV().size() != this->vector.getV().size()) {
         std::cout << "the vectors aren't in the same sizes." << std::endl;
-        exit(1);
+        return 0;
     }
     if (disName == "AUC") {
         this->distance = this->vector.euclideanDis(myVector);
@@ -77,7 +77,7 @@ void DistanceAndName::setDistance(MyVector myVector, string disName) {
         }
 
     }
-
+    return 1;
 }
 
 /**

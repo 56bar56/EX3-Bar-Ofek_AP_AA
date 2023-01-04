@@ -157,7 +157,7 @@ float MyVector::checkNewFloat(string str) {
             if (i != 0) {
                 if(str[i-1]!='E') {
                     cout << "invalid input";
-                    exit(1);
+                    return NULL;
                 }
             }
         }
@@ -165,17 +165,17 @@ float MyVector::checkNewFloat(string str) {
             counterE++;
             if(i==0||i==str.size()-1) {
                 cout << "invalid input";
-                exit(1);
+                return NULL;
             }
         }
     }
     if (numberOfPoints > 1) { // we cant have more than one point
         cout << "invalid input";
-        exit(1);
+        return NULL;
     }
     if (counterE > 1) { // we cant have more than one E
         cout << "invalid input";
-        exit(1);
+        return NULL;
     }
     return std::stof(str);
 }
@@ -197,13 +197,16 @@ vector<float> MyVector::returnNewNumb(string str1) {
         while (str1[i] != ' ' && i < str1.size()) {
             if (!(isdigit(str1[i]) || str1[i] == '-' || str1[i] == '.'||str1[i]=='E')) { //if we have a char we can't get
                 cout << "invalid input";
-                exit(1);
+                return {'\0'};
             }
             num_vec += str1[i];
             i++;
         }
         if (num_vec != "") {
             num = checkNewFloat(num_vec);
+            if(num==NULL) {
+                return {'\0'};
+            }
             g1.push_back(num);
             num_vec = "";
         }
