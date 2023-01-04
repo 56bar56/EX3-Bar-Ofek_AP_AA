@@ -29,7 +29,7 @@ void DistanceList::addItem(string str1) {
             if (str1[i] == ',') { //when we have , we get to the other number, and we keep the number before in num_vec
                 for(j=0;j<num_vec.size();j++) {
                     if (!(isdigit(num_vec[j]) || num_vec[j] == '-' || num_vec[j] == '.'||num_vec[j]=='E')) {
-                        cout << "invalid input";
+                        cout << "invalid input int the file";
                         exit(1);
                     }
                 }

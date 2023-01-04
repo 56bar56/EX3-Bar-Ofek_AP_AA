@@ -111,7 +111,6 @@ string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, Dis
     int k = kPlaces;
     std::string disKind = distanceKind;
     if (disKind != "AUC" && disKind != "MAN" && disKind != "CHB" && disKind != "CAN" && disKind != "MIN") {
-        std::cout << "the distance isn't valid value";
         return "invalid input";
     }
     if (list.setDistances(MyVector(g1), disKind) == 0) {
@@ -126,6 +125,5 @@ string FormerMainRunner(int kPlaces, string distanceKind, vector<float> vec, Dis
     }
     mergeSort(closestNames, 0, k - 1);  //sort by string
     string result = FoundTheName(closestNames);
-    //cout << result << std::endl;//print the name
     return result;
 }

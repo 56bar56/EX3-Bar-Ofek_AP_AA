@@ -6,6 +6,7 @@
 #include "ServerRunner.h"
 
 using namespace std;
+
 /**
  * a function that run our server.
  * @param fileRead the nam of the file we get
@@ -71,11 +72,8 @@ void runServerNew(string fileRead, int port) {
                 perror("error sending to client");
             } else if (read_bytes < 0) {
                 perror("error accepting client");
-            } else { //just to see the information the server get.
-                cout << buffer << std::endl;;
+            } else {
             }
-            //send with some defineder between like : k&vector&distance
-            //getting first number
             while (buffer[j] == ' ') {
                 j++;
             }
@@ -140,20 +138,19 @@ void runServerNew(string fileRead, int port) {
                         i++;
                     }
                     if (kstr == "") {
-                        std::cout << "the k isn't valid value";
                         result = "invalid input";
                         isValid = false;
                     }
                     for (i = 0; i < kstr.size(); i++) {
                         if (!std::isdigit(kstr[i])) {
-                            std::cout << "the k isn't valid value";
                             result = "invalid input";
                             isValid = false;
                         }
                     }
                     if (isValid) {
                         k = std::stoi(kstr);
-                        if (k > list.getV().size()) { //if the k is a number we cant use we set him to the size of the list
+                        if (k >
+                            list.getV().size()) { //if the k is a number we cant use we set him to the size of the list
                             k = list.getV().size() - 1;
                         }
                         result = FormerMainRunner(k, distanceName, vector, list);
@@ -177,11 +174,11 @@ void runServerNew(string fileRead, int port) {
                 break;
             }
         }
-        cout << ("we close the clieant");
         close(client_sock);
     }
     close(sock);
 }
+
 /**
  * the main of the server.
  * @param argc the number of arguments

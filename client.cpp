@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         int data_len = strlen(data_addr);
         int sent_bytes = send(sock, data_addr, data_len, 0);
         if (sent_bytes < 0) {
-            // error
+            perror("the sent faile");
         }
         i = 0;
         while (data_addr[i] == ' ') {
@@ -91,9 +91,9 @@ int main(int argc, char *argv[]) {
         }
         int read_bytes = recv(sock, buffer, expected_data_len, 0);
         if (read_bytes == 0) {
-            // connection is closed
+            perror(" connection is closed");
         } else if (read_bytes < 0) {
-            // error
+            perror(" error");
         } else {
             std::cout << buffer << std::endl;
         }

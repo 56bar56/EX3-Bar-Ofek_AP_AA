@@ -53,7 +53,6 @@ float DistanceAndName::getDistance() const {
  */
 int DistanceAndName::setDistance(MyVector myVector, string disName) {
     if (myVector.getV().size() != this->vector.getV().size()) {
-        std::cout << "the vectors aren't in the same sizes." << std::endl;
         return 0;
     }
     if (disName == "AUC") {

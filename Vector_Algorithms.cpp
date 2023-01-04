@@ -64,7 +64,6 @@ float MyVector::canberraDis(MyVector vOther) {
     float sum = 0;
     for (int i = 0; i < this->v.size(); i++) {
         if (this->v[i] == 0 && vOther.getV()[i] == 0) {
-            std::cout << "we cant find the Canberra distance because we can't divide with 0 " << std::endl;
             i = this->v.size();
             sum = -1;//defult value
 
@@ -156,7 +155,6 @@ float MyVector::checkNewFloat(string str) {
         if (str[i] == '-') {//we check if we add - in wrong place
             if (i != 0) {
                 if(str[i-1]!='E') {
-                    cout << "invalid input";
                     return NULL;
                 }
             }
@@ -164,17 +162,14 @@ float MyVector::checkNewFloat(string str) {
         if(str[i]=='E') {
             counterE++;
             if(i==0||i==str.size()-1) {
-                cout << "invalid input";
                 return NULL;
             }
         }
     }
     if (numberOfPoints > 1) { // we cant have more than one point
-        cout << "invalid input";
         return NULL;
     }
     if (counterE > 1) { // we cant have more than one E
-        cout << "invalid input";
         return NULL;
     }
     return std::stof(str);
@@ -196,7 +191,6 @@ vector<float> MyVector::returnNewNumb(string str1) {
         }
         while (str1[i] != ' ' && i < str1.size()) {
             if (!(isdigit(str1[i]) || str1[i] == '-' || str1[i] == '.'||str1[i]=='E')) { //if we have a char we can't get
-                cout << "invalid input";
                 return {'\0'};
             }
             num_vec += str1[i];
