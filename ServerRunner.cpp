@@ -57,7 +57,6 @@ void runServerNew(string fileRead, int port) {
         if (client_sock < 0) {
             perror("error accepting client");
         }
-        //k cant be negetive
         bool flagStop = true;
         while (flagStop) {
             bool isValid = true;
@@ -129,8 +128,6 @@ void runServerNew(string fileRead, int port) {
                     while (buffer[i] == ' ') {
                         i++;
                     }
-                    //we already have the file
-                    //char result[4096];
                     int k;
                     string kstr = "";
                     while (buffer[i] != ' ' && buffer[i] != '\0') {
