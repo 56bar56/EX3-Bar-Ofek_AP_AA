@@ -186,8 +186,9 @@ void runServerNew(string fileRead, int port) {
  * @return default 1
  */
 int main(int argc, char *argv[]) {
-   /* string file = "iris_classified.csv";
+   /*string file = "iris_classified.csv";
     int port = 5555;*/
+
     string file = argv[1];
     int i;
     for (i = 0; i < strlen(argv[2]); i++) {

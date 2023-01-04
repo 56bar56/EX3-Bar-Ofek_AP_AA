@@ -14,18 +14,18 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-     const char * ip_address=argv[1];
-     int i;
-      for (i = 0; i < strlen(argv[2]); i++) {
+    int i=0;
+    const char * ip_address=argv[1];
+    for (i = 0; i < strlen(argv[2]); i++) {
         if (!std::isdigit(argv[2][i])) {
             std::cout << "the port isn't valid value";
             exit(1);
         }
     }
-      const int port_no=std::stoi(argv[2]);
-     /*
-    const char *ip_address = "127.0.0.1";
-    const int port_no = 5555;*/
+    const int port_no=std::stoi(argv[2]);
+    /*
+   const char *ip_address = "127.0.0.1";
+   const int port_no = 5555;*/
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("error creating socket");
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     char buffer[4096];
     string scanner;
     int expected_data_len = sizeof(buffer);
-     i = 0;
+    i = 0;
     while (true) {
         bool isExite = false;
         i = 0;
