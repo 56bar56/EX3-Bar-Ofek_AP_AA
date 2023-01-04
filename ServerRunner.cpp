@@ -76,10 +76,10 @@ void runServerNew(string fileRead, int port) {
                 j++;
             }
             if (buffer[j++] == '-') {
-                if (buffer[j] == '1') {
+                if (buffer[j++] == '1') {
                     bool ifSpace = true;
                     int i;
-                    for (i = 2; i < strlen(buffer) && ifSpace; i++) {
+                    for (i = j; i < strlen(buffer) && ifSpace; i++) {
                         if (buffer[i] != ' ') {
                             ifSpace = false;
                         }
@@ -95,6 +95,9 @@ void runServerNew(string fileRead, int port) {
             if (flagStop) {
                 //getting vector
                 int i = 0;
+                while (buffer[i] == ' ') {
+                    i++;
+                }
                 string vec = ""; //need to get the vector from the buffer
                 while (isdigit(buffer[i]) || buffer[i] == ' ' || buffer[i] == '-' || buffer[i] == '.' ||
                        buffer[i] == 'E') {
@@ -102,59 +105,64 @@ void runServerNew(string fileRead, int port) {
                     i++;
                 }
                 vector<float> vector;
-                vector = MyVector::returnNewNumb(vec);
-                if(vector[0]=='\0') {
-                    isValid= false;
+                if (vec == "") {
                     result = "invalid input";
-                }
-                //getting distance name
-                string distanceName = ""; //need to get the distance name from the buffer
-                while (buffer[i] == ' ') {
-                    i++;
-                }
-                while (isalpha(buffer[i])) {
-                    distanceName += buffer[i];
-                    i++;
-                }
-                while (buffer[i] == ' ') {
-                    i++;
-                }
-                //we already have the file
-                //char result[4096];
-                int k;
-                string kstr = "";
-                while (buffer[i] != ' ' && buffer[i] != '\0') {
-                    kstr += buffer[i];
-                    i++;
-                }
-                if(kstr=="") {
-                    std::cout << "the k isn't valid value";
-                    result = "invalid input";
-                    isValid=false;
-                }
-                for (i = 0; i < kstr.size(); i++) {
-                    if (!std::isdigit(kstr[i])) {
+                } else {
+
+
+                    vector = MyVector::returnNewNumb(vec);
+                    if (vector[0] == '\0') {
+                        isValid = false;
+                        result = "invalid input";
+                    }
+                    //getting distance name
+                    string distanceName = ""; //need to get the distance name from the buffer
+                    while (buffer[i] == ' ') {
+                        i++;
+                    }
+                    while (isalpha(buffer[i])) {
+                        distanceName += buffer[i];
+                        i++;
+                    }
+                    while (buffer[i] == ' ') {
+                        i++;
+                    }
+                    //we already have the file
+                    //char result[4096];
+                    int k;
+                    string kstr = "";
+                    while (buffer[i] != ' ' && buffer[i] != '\0') {
+                        kstr += buffer[i];
+                        i++;
+                    }
+                    if (kstr == "") {
                         std::cout << "the k isn't valid value";
                         result = "invalid input";
-                        isValid=false;
+                        isValid = false;
                     }
-                }
-                if (isValid) {
-                    k = std::stoi(kstr);
-                    if (k > list.getV().size() ||
-                        k < 0) { //if the k is a number we cant use we set him to the size of the list
-                        k = list.getV().size();
+                    for (i = 0; i < kstr.size(); i++) {
+                        if (!std::isdigit(kstr[i])) {
+                            std::cout << "the k isn't valid value";
+                            result = "invalid input";
+                            isValid = false;
+                        }
                     }
-                    result = FormerMainRunner(k, distanceName, vector, list);
+                    if (isValid) {
+                        k = std::stoi(kstr);
+                        if (k > list.getV().size()) { //if the k is a number we cant use we set him to the size of the list
+                            k = list.getV().size() - 1;
+                        }
+                        result = FormerMainRunner(k, distanceName, vector, list);
+                    }
                 }
             }
             if (flagStop) {
-                int i=0;
-                while(bufferReturn[i]) {
-                    bufferReturn[i]='\0';
+                int i = 0;
+                while (bufferReturn[i]) {
+                    bufferReturn[i] = '\0';
                     i++;
                 }
-                for ( i = 0; i < result.length(); i++) {
+                for (i = 0; i < result.length(); i++) {
                     bufferReturn[i] = result[i];
                 }
                 int sent_bytes = send(client_sock, bufferReturn, expected_data_len2, 0);
